@@ -27,7 +27,6 @@ import qualified Pos.Core.Block as T
 import           Pos.Core.Ssc (SscPayload, SscProof)
 import           Pos.Crypto (ProxySecretKey, PublicKey, SecretKey, createPsk, hash, toPublic)
 import           Pos.Data.Attributes (areAttributesKnown)
-import           Pos.Util.Arbitrary (makeSmall)
 import           Pos.Util.Util (leftToPanic)
 
 newtype BodyDependsOnSlot b = BodyDependsOnSlot
@@ -143,7 +142,7 @@ instance (HasConfiguration, Arbitrary SscProof) => Arbitrary T.MainToSign where
 
 instance (HasConfiguration, Arbitrary SscPayloadDependsOnSlot) =>
          Arbitrary (BodyDependsOnSlot T.MainBlockchain) where
-    arbitrary = pure $ BodyDependsOnSlot $ \slotId -> makeSmall $ do
+    arbitrary = pure $ BodyDependsOnSlot $ \slotId -> do
         txPayload   <- arbitrary
         generator   <- genPayloadDependsOnSlot <$> arbitrary
         mpcData     <- generator slotId
@@ -152,7 +151,7 @@ instance (HasConfiguration, Arbitrary SscPayloadDependsOnSlot) =>
         return $ T.MainBody txPayload mpcData dlgPayload mpcUpload
 
 instance (HasConfiguration, Arbitrary SscPayload) => Arbitrary (T.Body T.MainBlockchain) where
-    arbitrary = makeSmall genericArbitrary
+    arbitrary = genericArbitrary
     shrink mb =
         [ T.MainBody txp sscp dlgp updp
         | (txp, sscp, dlgp, updp) <-
