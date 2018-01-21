@@ -23,7 +23,6 @@ import qualified Data.Text.Buildable
 import           Ether.Internal (HasLens (..))
 import           Formatting (bprint, build, (%))
 import           Serokell.Util.Text (listJson)
-import           Test.QuickCheck (Arbitrary (..))
 
 import           Pos.Block.Slog.Types (SlogUndo (..))
 import           Pos.Communication.Protocol (NodeId)
@@ -43,14 +42,6 @@ data Undo = Undo
     } deriving (Generic)
 
 instance NFData Undo
-
-instance Arbitrary Undo where
-    arbitrary = do
-        a <- arbitrary
-        b <- arbitrary
-        c <- arbitrary
-        d <- arbitrary
-        return $ Undo a b c d
 
 -- | Block and its Undo.
 type Blund = (Block, Undo)

@@ -53,7 +53,6 @@ import           System.FileLock (FileLock, SharedExclusive (..), lockFile, unlo
 import           System.FilePath (takeDirectory, takeFileName)
 import           System.IO (hClose, openBinaryTempFile)
 import           System.Wlog (WithLogger)
-import           Test.QuickCheck (Arbitrary (..))
 
 import           Pos.Binary.Class (Bi (..), decodeFull, encodeListLen, enforceSize, serialize')
 import           Pos.Binary.Class (Cons (..), Field (..), deriveSimpleBi)
@@ -146,30 +145,6 @@ instance Exception UserSecretDecodingError
 instance Buildable UserSecretDecodingError where
     build (UserSecretDecodingError msg) =
         "Failed to decode user secret: " <> bprint build msg
-
-instance Eq UserSecret where
-    a == b = (_usKeys a == _usKeys b)
-        && (_usPrimKey a == _usPrimKey b)
-        && (_usVss a == _usVss b)
-        && (_usWallet a == _usWallet b)
-        && (_usPath a == _usPath b)
-        && (_usLock a == _usLock b)
-
-instance Arbitrary UserSecret where
-    arbitrary = do
-        a <- arbitrary
-        b <- arbitrary
-        c <- arbitrary
-        d <- arbitrary
-        e <- arbitrary
-        f <- arbitrary
-        return $ UserSecret
-            { _usKeys = a
-            , _usPrimKey = b
-            , _usVss = c
-            , _usWallet = d
-            , _usPath = e
-            , _usLock = f }
 
 -- | Path of lock file for the provided path.
 lockFilePath :: FilePath -> FilePath
