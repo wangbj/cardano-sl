@@ -29,6 +29,7 @@ import           Pos.Arbitrary.Infra ()
 import           Pos.Arbitrary.Slotting ()
 import           Pos.Arbitrary.Ssc ()
 import           Pos.Arbitrary.Update ()
+import           Pos.Arbitrary.Update.Core ()
 import           Pos.Binary.Class
 import           Pos.Binary.Communication ()
 import           Pos.Binary.Core ()
@@ -39,7 +40,7 @@ import           Pos.Core.Common (ScriptVersion)
 import           Pos.Data.Attributes (Attributes (..), decodeAttributes, encodeAttributes)
 import qualified Test.Pos.Cbor.RefImpl as R
 import           Test.Pos.Helpers (binaryTest)
-import           Test.Pos.Util (withDefConfiguration, expectationError)
+import           Test.Pos.Util (expectationError, withDefConfiguration)
 
 data User
     = Login { login :: String
@@ -340,20 +341,20 @@ spec = withDefConfiguration $ do
             it "UserSecret" $ pendingWith "No Eq instance defined"
             it "WalletUserSecret" $ pendingWith "No Eq instance defined"
             -- pendingNoArbitrary "Undo" DONE
-            pendingNoArbitrary "DataMsg (UpdateProposal, [UpdateVote])"
-            pendingNoArbitrary "DataMsg UpdateVote"
-            pendingNoArbitrary "MsgGetHeaders"
-            pendingNoArbitrary "MsgGetBlocks"
-            pendingNoArbitrary "WithHash"
-            pendingNoArbitrary "Pvss.PublicKey"
-            pendingNoArbitrary "Pvss.KeyPair"
-            pendingNoArbitrary "Pvss.Secret"
-            pendingNoArbitrary "Pvss.DecryptedShare"
-            pendingNoArbitrary "Pvss.EncryptedShare"
-            pendingNoArbitrary "Pvss.Proof"
-            pendingNoArbitrary "Ed25519.PointCompressed"
-            pendingNoArbitrary "Ed25519.Scalar"
-            pendingNoArbitrary "Ed25519.Signature"
+            -- pendingNoArbitrary "DataMsg (UpdateProposal, [UpdateVote])"
+            -- pendingNoArbitrary "DataMsg UpdateVote"
+            -- pendingNoArbitrary "MsgGetHeaders"
+            -- pendingNoArbitrary "MsgGetBlocks"
+            -- pendingNoArbitrary "WithHash"
+            -- pendingNoArbitrary "Pvss.PublicKey"
+            -- pendingNoArbitrary "Pvss.KeyPair" ??? where is this defined
+            -- pendingNoArbitrary "Pvss.Secret"
+            -- pendingNoArbitrary "Pvss.DecryptedShare" ??? where is this defined
+            -- pendingNoArbitrary "Pvss.EncryptedShare" ??? where is this defined
+            -- pendingNoArbitrary "Pvss.Proof" ??? where is this defined
+            -- pendingNoArbitrary "Ed25519.PointCompressed"
+            -- pendingNoArbitrary "Ed25519.Scalar"
+            -- pendingNoArbitrary "Ed25519.Signature"
             pendingNoArbitrary "CC.ChainCode"
             pendingNoArbitrary "CC.XPub"
             pendingNoArbitrary "CC.XPrv"

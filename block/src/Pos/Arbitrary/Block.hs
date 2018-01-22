@@ -18,7 +18,6 @@ import           Pos.Arbitrary.Delegation (genDlgPayload)
 import           Pos.Arbitrary.Ssc (SscPayloadDependsOnSlot (..))
 import           Pos.Arbitrary.Txp ()
 import           Pos.Arbitrary.Update ()
-import           Pos.Arbitrary.Update ()
 import           Pos.Binary.Class (Bi, Raw, biSize)
 import qualified Pos.Block.Base as T
 import qualified Pos.Block.Pure as T

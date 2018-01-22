@@ -14,11 +14,13 @@ import           Test.QuickCheck.Arbitrary.Generic (genericArbitrary, genericShr
 
 import           Pos.Arbitrary.Crypto.Unsafe ()
 import           Pos.Binary.Class (AsBinary (..), AsBinaryClass (..), Bi, Raw)
+
+import qualified Crypto.ECC.Edwards25519 as Ed25519
 import           Pos.Binary.Crypto ()
 import           Pos.Crypto.AsBinary ()
 import           Pos.Crypto.Configuration (HasCryptoConfiguration, ProtocolMagic (..))
-import           Pos.Crypto.Hashing (AHash (..), AbstractHash (..), HashAlgorithm,
-                                     unsafeCheatingHashCoerce)
+import           Pos.Crypto.Hashing (AHash (..), AbstractHash (..), HashAlgorithm, WithHash (..),
+                                     unsafeCheatingHashCoerce, withHash)
 import           Pos.Crypto.HD (HDAddressPayload, HDPassphrase (..))
 import           Pos.Crypto.Random (deterministic, randomNumberInRange)
 import           Pos.Crypto.SecretSharing (DecShare, EncShare, Secret, SecretProof, Threshold,
@@ -224,3 +226,32 @@ instance Arbitrary HDPassphrase where
 
 instance Arbitrary HDAddressPayload where
     arbitrary = genericArbitrary
+
+----------------------------------------------------------------------------
+-- WithHash
+----------------------------------------------------------------------------
+
+instance (Bi a, Arbitrary a) => Arbitrary (WithHash a) where
+    arbitrary = do
+        a <- arbitrary
+        return $ withHash a
+    shrink = genericShrink
+
+----------------------------------------------------------------------------
+-- Ed25519
+----------------------------------------------------------------------------
+
+instance Arbitrary Ed25519.PointCompressed where
+    arbitrary = do
+        a <- arbitrary
+        return $ Ed25519.pointCompressed a
+
+instance Arbitrary Ed25519.Scalar where
+    arbitrary = do
+        a <- arbitrary
+        return $ Ed25519.scalar a
+
+instance Arbitrary Ed25519.Signature where
+    arbitrary = do
+        a <- arbitrary
+        return $ Ed25519.Signature a
