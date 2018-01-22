@@ -27,7 +27,6 @@ import qualified Pos.Core.Block as T
 import           Pos.Core.Ssc (SscPayload, SscProof)
 import           Pos.Crypto (ProxySecretKey, PublicKey, SecretKey, createPsk, hash, toPublic)
 import           Pos.Data.Attributes (areAttributesKnown)
-import           Pos.Util.Util (leftToPanic)
 
 newtype BodyDependsOnSlot b = BodyDependsOnSlot
     { genBodyDepsOnSlot :: Core.SlotId -> Gen (T.Body b)
@@ -182,8 +181,7 @@ instance ( Arbitrary SscPayload
             pure Nothing <*>
             pure body <*>
             pure extraHeaderData
-        return $ leftToPanic "arbitrary @MainBlock: " $
-            T.recreateGenericBlock header body extraBodyData
+        return $ T.UnsafeGenericBlock header body extraBodyData
     shrink = genericShrink
 
 instance Buildable T.BlockHeader => Buildable (T.BlockHeader, PublicKey) where
