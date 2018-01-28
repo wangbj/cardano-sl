@@ -7910,11 +7910,11 @@ inherit (pkgs) mesa;};
          }:
          mkDerivation {
            pname = "cborg";
-           version = "0.1.1.0";
+           version = "0.2.0.0";
            src = fetchgit {
-             url = "https://github.com/well-typed/cborg";
-             sha256 = "06k0sqjfwc75w099vg5yqa5jf5406j9cz2x1dbkp3p887cmik4fv";
-             rev = "c7db82bfd93923f5b08ed51a4cd53e30bd445924";
+             url = "https://github.com/avieth/cborg";
+             sha256 = "04nh04kblpj45kmcg2dr2mm2ag14wdq98v7ffjdw5x0ispahrnw3";
+             rev = "f1a9e0ce735d49284f06bea986beac06a8503162";
            };
            postUnpack = "sourceRoot+=/cborg; echo source root reset to $sourceRoot";
            libraryHaskellDepends = [
