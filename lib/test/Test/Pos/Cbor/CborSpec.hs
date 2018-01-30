@@ -346,22 +346,6 @@ spec = withDefConfiguration $ do
             -- pendingNoArbitrary "MsgGetHeaders"
             -- pendingNoArbitrary "MsgGetBlocks"
             -- pendingNoArbitrary "WithHash"
-            -- pendingNoArbitrary "Pvss.PublicKey"
-            -- pendingNoArbitrary "Pvss.KeyPair" ??? where is this defined
-            -- pendingNoArbitrary "Pvss.Secret"
-            -- pendingNoArbitrary "Pvss.DecryptedShare" ??? where is this defined
-            -- pendingNoArbitrary "Pvss.EncryptedShare" ??? where is this defined
-            -- pendingNoArbitrary "Pvss.Proof" ??? where is this defined
-            -- pendingNoArbitrary "Ed25519.PointCompressed"
-            -- pendingNoArbitrary "Ed25519.Scalar"
-            -- pendingNoArbitrary "Ed25519.Signature"
-            -- pendingNoArbitrary "CC.ChainCode"
-            pendingNoArbitrary "CC.XPub"
-            pendingNoArbitrary "CC.XPrv"
-            pendingNoArbitrary "CC.XSignature"
-            -- pendingNoArbitrary "EdStandard.PublicKey"
-            -- pendingNoArbitrary "EdStandard.SecretKey"
-            -- pendingNoArbitrary "EdStandard.Signature"
             pendingNoArbitrary "EncryptedSecretKey"
 
 pendingNoArbitrary :: String -> Spec
