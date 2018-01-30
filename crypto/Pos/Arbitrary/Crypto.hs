@@ -15,7 +15,10 @@ import           Test.QuickCheck.Arbitrary.Generic (genericArbitrary, genericShr
 import           Pos.Arbitrary.Crypto.Unsafe ()
 import           Pos.Binary.Class (AsBinary (..), AsBinaryClass (..), Bi, Raw)
 
+import qualified Cardano.Crypto.Wallet as CC
 import qualified Crypto.ECC.Edwards25519 as Ed25519
+import qualified Crypto.Sign.Ed25519 as EdStandard
+
 import           Pos.Binary.Crypto ()
 import           Pos.Crypto.AsBinary ()
 import           Pos.Crypto.Configuration (HasCryptoConfiguration, ProtocolMagic (..))
@@ -32,6 +35,7 @@ import           Pos.Crypto.Signing (ProxyCert, ProxySecretKey, ProxySignature, 
 import           Pos.Crypto.Signing.Redeem (RedeemPublicKey, RedeemSecretKey, RedeemSignature,
                                             redeemKeyGen, redeemSign)
 import           Pos.Crypto.Signing.Safe (PassPhrase, createProxyCert, createPsk)
+import           Pos.Crypto.Signing.Types.Safe (EncryptedSecretKey (..))
 import           Pos.Crypto.Signing.Types.Tag (SignTag (..))
 import           Pos.Util.Arbitrary (Nonrepeating (..), arbitraryUnsafe, runGen, sublistN)
 import           Pos.Util.Orphans ()
@@ -255,3 +259,57 @@ instance Arbitrary Ed25519.Signature where
     arbitrary = do
         a <- arbitrary
         return $ Ed25519.Signature a
+
+---------------------------------------------------------------------------
+-- Cardano.Crypto.Wallet
+---------------------------------------------------------------------------
+
+instance Arbitrary CC.ChainCode where
+    arbitrary = do
+        a <- arbitrary
+        return $ CC.ChainCode a
+
+instance Arbitrary CC.XPrv where
+    arbitrary = do
+        a <- arbitrary
+        return $ CC.xprv b
+
+instance Arbitrary CC.XPub where
+    arbitrary = do
+        a <- arbitrary
+        b <- arbitrary
+        return $ CC.xpub b a
+
+-- instance Arbitrary CC.XSignature where
+--     arbitrary = do
+--         a <- arbitrary
+--         return $ CC.XSignature { CC.unXSignature = a }
+
+---------------------------------------------------------------------------
+-- Crypto.Sign.Ed25519
+---------------------------------------------------------------------------
+
+instance Arbitrary EdStandard.Signature where
+    arbitrary = do
+        a <- arbitrary
+        return $ EdStandard.Signature a
+
+instance Arbitrary EdStandard.PublicKey where
+    arbitrary = do
+        a <- arbitrary
+        return $ EdStandard.PublicKey a
+
+instance Arbitrary EdStandard.SecretKey where
+    arbitrary = do
+        a <- arbitrary
+        return $ EdStandard.SecretKey a
+
+--------------------------------------------------------------------------
+-- Pos.Crypto.Signing.Types.Safe
+--------------------------------------------------------------------------
+
+instance Arbitrary EncryptedSecretKey where
+    arbitrary = do
+        a <- arbitrary
+        b <- arbitrary
+        return $ EncryptedSecretKey a b

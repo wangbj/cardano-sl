@@ -355,13 +355,13 @@ spec = withDefConfiguration $ do
             -- pendingNoArbitrary "Ed25519.PointCompressed"
             -- pendingNoArbitrary "Ed25519.Scalar"
             -- pendingNoArbitrary "Ed25519.Signature"
-            pendingNoArbitrary "CC.ChainCode"
+            -- pendingNoArbitrary "CC.ChainCode"
             pendingNoArbitrary "CC.XPub"
             pendingNoArbitrary "CC.XPrv"
             pendingNoArbitrary "CC.XSignature"
-            pendingNoArbitrary "EdStandard.PublicKey"
-            pendingNoArbitrary "EdStandard.SecretKey"
-            pendingNoArbitrary "EdStandard.Signature"
+            -- pendingNoArbitrary "EdStandard.PublicKey"
+            -- pendingNoArbitrary "EdStandard.SecretKey"
+            -- pendingNoArbitrary "EdStandard.Signature"
             pendingNoArbitrary "EncryptedSecretKey"
 
 pendingNoArbitrary :: String -> Spec
