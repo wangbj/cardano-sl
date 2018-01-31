@@ -16,14 +16,12 @@ import           Control.Monad.STM (retry)
 import           Data.List.NonEmpty (NonEmpty(..))
 import qualified Data.List.NonEmpty as NE
 import           Ether.Internal (HasLens (..))
-import           Formatting (build, builder, int, sformat, (%))
+import           Formatting (build, int, sformat, (%))
 import           Mockable (delay)
-import           Serokell.Data.Memory.Units (unitBuilder)
 import           Serokell.Util (sec)
 import           Serokell.Util.Text (listJson)
 import           System.Wlog (logDebug, logError, logInfo, logWarning)
 
-import           Pos.Binary.Class (biSize)
 import           Pos.Block.BlockWorkMode (BlockWorkMode)
 import           Pos.Block.Logic (ClassifyHeaderRes (..), classifyNewHeader)
 import           Pos.Block.Network.Logic (BlockNetLogicException (DialogUnexpected),
@@ -34,7 +32,7 @@ import           Pos.Block.RetrievalQueue (BlockRetrievalQueueTag, BlockRetrieva
 import           Pos.Block.Types (RecoveryHeaderTag)
 import           Pos.Communication.Protocol (NodeId, OutSpecs, convH, toOutSpecs)
 import           Pos.Core (HasHeaderHash (..), HeaderHash, difficultyL, isMoreDifficult)
-import           Pos.Core.Block (BlockHeader, blockHeader)
+import           Pos.Core.Block (BlockHeader)
 import           Pos.Crypto (shortHashF)
 import           Pos.Diffusion.Types (Diffusion)
 import qualified Pos.Diffusion.Types as Diffusion (Diffusion (getBlocks))
@@ -295,10 +293,8 @@ getProcessBlocks diffusion nodeId desired checkpoints = do
           let blocks = OldestFirst (headBlocks :| tailBlocks)
           recHeaderVar <- view (lensOf @RecoveryHeaderTag)
           logDebug $ sformat
-              ("Retrieved "%int%" blocks of total size "%builder%": "%listJson)
+              ("Retrieved "%int%" blocks")
               (blocks ^. _OldestFirst . to NE.length)
-              (unitBuilder $ biSize blocks)
-              (map (headerHash . view blockHeader) blocks)
           handleBlocks nodeId blocks diffusion 
           -- If we've downloaded any block with bigger
           -- difficulty than ncrecoveryheader, we're
