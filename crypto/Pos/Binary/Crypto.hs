@@ -10,7 +10,7 @@ import           Universum
 import           Control.Lens (_Left)
 import qualified Cardano.Crypto.Wallet as CC
 import qualified Crypto.Math.Edwards25519 as Ed25519
-import           Crypto.Hash (Digest, digestFromByteString, byteStringFromDigest)
+import           Crypto.Hash (digestFromByteString, byteStringFromDigest)
 import qualified Crypto.PVSS as Pvss
 import qualified Crypto.SCRAPE as Scrape
 import qualified Crypto.Sign.Ed25519 as EdStandard
