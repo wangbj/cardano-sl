@@ -7,8 +7,8 @@ module Pos.Binary.Crypto () where
 
 import           Universum
 
-import           Control.Lens (_Left)
 import qualified Cardano.Crypto.Wallet as CC
+import           Control.Lens (_Left)
 import qualified Crypto.ECC.Edwards25519 as Ed25519
 import           Crypto.Hash (digestFromByteString)
 import qualified Crypto.PVSS as Pvss
@@ -18,6 +18,9 @@ import qualified Data.ByteArray as ByteArray
 import qualified Data.ByteString as BS
 import           Formatting (int, sformat, (%))
 
+
+import qualified Codec.CBOR.Decoding as D
+import qualified Codec.CBOR.Encoding as E
 import           Pos.Binary.Class (AsBinary (..), Bi (..), Cons (..), Field (..), decodeBinary,
                                    deriveSimpleBi, encodeBinary, encodeListLen, enforceSize)
 import           Pos.Crypto.AsBinary (decShareBytes, encShareBytes, secretBytes, vssPublicKeyBytes)
@@ -34,7 +37,7 @@ import           Pos.Crypto.Signing.Types.Redeem (RedeemPublicKey (..), RedeemSe
                                                   RedeemSignature (..))
 import           Pos.Crypto.Signing.Types.Safe (EncryptedSecretKey (..), PassPhrase,
                                                 passphraseLength)
-import           Pos.Util.Util (toCborError, cborError)
+import           Pos.Util.Util (cborError, toCborError)
 
 instance Bi a => Bi (WithHash a) where
     encode = encode . whData
@@ -156,7 +159,16 @@ instance Bi CC.XSignature where
 
 deriving instance Typeable a => Bi (Signature a)
 deriving instance Bi PublicKey
-deriving instance Bi SecretKey
+
+encodeXPrv :: CC.XPrv -> E.Encoding
+encodeXPrv a = E.encodeBytes $ CC.unXPrv a
+
+decodeXPrv :: D.Decoder s CC.XPrv
+decodeXPrv = toCborError . over _Left fromString . CC.xprv =<< decode @ByteString
+
+instance Bi SecretKey where
+    encode (SecretKey a) = encodeXPrv a
+    decode = fmap SecretKey decodeXPrv
 
 instance Bi EncryptedSecretKey where
     encode (EncryptedSecretKey sk pph) = encodeListLen 2
