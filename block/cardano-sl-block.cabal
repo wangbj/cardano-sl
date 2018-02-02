@@ -168,4 +168,4 @@ Benchmark bench-block
                    , cardano-sl-txp
                    , cardano-sl-update
                    , cardano-sl-ssc
-                   , cardano-sl-dlg
+                   , cardano-sl-delegation
