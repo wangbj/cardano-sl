@@ -30,7 +30,7 @@ import           Pos.Crypto.Signing (ProxyCert, ProxySecretKey, ProxySignature, 
 import           Pos.Crypto.Signing.Redeem (RedeemPublicKey, RedeemSecretKey, RedeemSignature,
                                             redeemKeyGen, redeemSign)
 import           Pos.Crypto.Signing.Safe (PassPhrase, createProxyCert, createPsk)
-import           Pos.Crypto.Signing.Types.Safe (EncryptedSecretKey (..))
+import           Pos.Crypto.Signing.Types.Safe (EncryptedSecretKey (..), noPassEncrypt)
 import           Pos.Crypto.Signing.Types.Tag (SignTag (..))
 import           Pos.Util.Arbitrary (Nonrepeating (..), arbitraryUnsafe, runGen, sublistN)
 import           Pos.Util.Orphans ()
@@ -240,8 +240,5 @@ instance (Bi a, Arbitrary a) => Arbitrary (WithHash a) where
 -- Pos.Crypto.Signing.Types.Safe
 --------------------------------------------------------------------------
 
--- instance Arbitrary EncryptedSecretKey where
---     arbitrary = do
---         a <- arbitrary
---         b <- arbitrary
---         return $ EncryptedSecretKey a b
+instance Arbitrary EncryptedSecretKey where
+    arbitrary = noPassEncrypt <$> arbitrary
