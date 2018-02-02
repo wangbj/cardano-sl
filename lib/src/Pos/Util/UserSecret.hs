@@ -122,6 +122,15 @@ data UserSecret = UserSecret
 
 makeLenses ''UserSecret
 
+instance Eq UserSecret where
+    a == b =
+        _usKeys a == _usKeys b &&
+        _usPrimKey a == _usPrimKey b &&
+        _usVss a == _usVss b &&
+        _usWallet a == _usWallet b &&
+        _usPath a == _usPath b &&
+        _usLock a ==  _usLock b
+
 class HasUserSecret ctx where
     -- if you're going to mock this TVar, look how it's done for peer state.
     userSecret :: Lens' ctx (TVar UserSecret)

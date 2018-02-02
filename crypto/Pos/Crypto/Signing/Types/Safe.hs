@@ -39,6 +39,13 @@ instance Show EncryptedSecretKey where
 instance B.Buildable EncryptedSecretKey where
     build _ = "<encrypted key>"
 
+instance Eq CC.XPrv where
+    a == b = CC.unXPrv a == CC.unXPrv b
+
+instance Eq EncryptedSecretKey where
+    a == b = eskPayload a == eskPayload b &&
+        eskHash a == eskHash b
+
 newtype PassPhrase = PassPhrase ScrubbedBytes
     deriving (Eq, Ord, Monoid, NFData, ByteArray, ByteArrayAccess)
 

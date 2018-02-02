@@ -340,13 +340,6 @@ spec = withDefConfiguration $ do
             -- Pending specs which doesn't have an `Arbitrary` or `Eq` instance defined.
             it "UserSecret" $ pendingWith "No Eq instance defined"
             it "WalletUserSecret" $ pendingWith "No Eq instance defined"
-            -- pendingNoArbitrary "Undo" DONE
-            -- pendingNoArbitrary "DataMsg (UpdateProposal, [UpdateVote])"
-            -- pendingNoArbitrary "DataMsg UpdateVote"
-            -- pendingNoArbitrary "MsgGetHeaders"
-            -- pendingNoArbitrary "MsgGetBlocks"
-            -- pendingNoArbitrary "WithHash"
-            pendingNoArbitrary "EncryptedSecretKey"
 
 pendingNoArbitrary :: String -> Spec
 pendingNoArbitrary ty = it ty $ pendingWith "Arbitrary instance required"
