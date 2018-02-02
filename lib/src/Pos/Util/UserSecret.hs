@@ -81,6 +81,13 @@ data WalletUserSecret = WalletUserSecret
 
 makeLenses ''WalletUserSecret
 
+instance Eq WalletUserSecret where
+    a == b =
+       _wusRootKey a == _wusRootKey b &&
+       _wusWalletName a == _wusWalletName b &&
+       _wusAccounts a == _wusAccounts b &&
+       _wusAddrs a == _wusAddrs b
+
 instance Buildable WalletUserSecret where
     build WalletUserSecret{..} =
         bprint ("{ root = "%addressF%", set name = "%build%
