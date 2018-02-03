@@ -22,7 +22,7 @@ Currently the only way to generate an updated `swagger.json` is to run the `wall
 the updated Swagger file will be written on disk. For example:
 
 ```
-stack exec wallet-new-server -- --topology=wallet-new/topology-examples/testnet.yaml \
+stack exec cardano-node-new -- --topology=wallet-new/topology-examples/testnet.yaml \
   --configuration-key mainnet_staging_short_epoch_full --wallet-debug --rebuild-db
 ```
 
